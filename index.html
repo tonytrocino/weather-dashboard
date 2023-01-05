@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Weather Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+    <main id="main">
+        <aside id="search">
+            <h2>Search for a city:</h2>
+            <input id="city" />
+            <button id="search">Search</button>
+            <div id="history"></div>
+        </aside>
+        <section>
+            <div id="current">
+                <h2 id="city-header"></h2>
+                <div id="current-temp"></div>
+                <div id="current-wind"></div>
+                <div id="current-humidity"></div>
+            </div>
+            <div id="forecast">
+                <h3>5-Day Forecast</h3>
+                <div id="days">
+                    <div id="day-1"></div>
+                    <div id="day-2"></div>
+                    <div id="day-3"></div>
+                    <div id="day-4"></div>
+                    <div id="day-5"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+      integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="./assets/js/script.js"></script>
+
+</body>
+</html>
