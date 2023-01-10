@@ -1,15 +1,17 @@
+// Global variables
 var apiKey = "dd973ce46d39d0efc4bc792777fb49f2";
 var city = "";
 var state = "";
 var country = "";
 
+// Determines if input is a zip code
 function isZipCode(str) {
   const re = /^\d{5}$/;
   return re.test(str);
 }
 
 $(function () {
-  // search listener
+  // listener for search form
   $(document).on("submit", "#search-form", function(event) {
     event.preventDefault();
     $("#location").removeClass("error");
@@ -20,8 +22,6 @@ $(function () {
 
   function getLocation() {
     let searchLocation = $("#location").val();
-    console.log("location: ", searchLocation);
-    console.log("isZip", isZipCode(searchLocation));
 
     if (isZipCode(searchLocation)) {
       getLocationByZip(searchLocation);
@@ -30,6 +30,7 @@ $(function () {
     }
   }
 
+//   grabs location data based on zip code from API
   function getLocationByZip(searchLocation) {
     let url = "//api.openweathermap.org/geo/1.0/zip";
     let data = {
@@ -43,7 +44,6 @@ $(function () {
       data: data,
       dataType: "json",
       success: function (location) {
-        console.log(location);
 
         //if no results, show error
         if (!location.name) {
@@ -62,6 +62,7 @@ $(function () {
     });
   }
 
+//   grabs location data from API
   function getLocationByCity(searchLocation) {
     let url = "//api.openweathermap.org/geo/1.0/direct";
     let data = {
@@ -69,15 +70,13 @@ $(function () {
       limit: 5,
       appid: apiKey,
     };
-    console.log("Data", data);
+
     $.ajax({
       type: "get",
       url: url,
       data: data,
       dataType: "json",
       success: function (locations) {
-        console.log(locations);
-        console.log("length", locations.length);
 
         //if no results, show error
         if (locations.length == 0) {
@@ -91,6 +90,8 @@ $(function () {
           country = locations[0].country;
           return;
         }
+
+        // displays dialogue box with multiple choice if city chosen has multiple cities in different states
         $("#search-btn").after('<div class="location-choice"><h3>Which One?</h3></div>');
         locations.forEach((location, index) => {
           $(".location-choice").append(`<button type="button" class="location-choice-btn" data-lat="${location.lat}" data-lon="${location.lon}" data-city="${location.name}" data-state="${location.state}" data-country="${location.country}">${location.name}, ${location.state}</button>`);
@@ -103,6 +104,7 @@ $(function () {
     });
   }
 
+//   listener for location choice buttons
   $(document).on("click", ".location-choice-btn", function() {
     city= $(this).data('city');
     state = $(this).data('state');
@@ -111,6 +113,7 @@ $(function () {
     $(".location-choice").remove();
   });
 
+//   listener for history buttons
   $(document).on("click", ".location-history-btn", function() {
     city= $(this).data('city');
     state = $(this).data('state');
@@ -124,6 +127,7 @@ $(function () {
     $("#location-error").show();
   }
 
+//   gets weather data from API
   function getWeatherData(lat, lon, addHistory=true) {
     let url = "https://api.openweathermap.org/data/3.0/onecall";
     let data = {
@@ -140,7 +144,6 @@ $(function () {
       data: data,
       dataType: "json",
       success: function (weather) {
-        console.log("Weather Data",weather);
 
         // if no results, show error
         if (weather.length == 0) {
@@ -148,6 +151,7 @@ $(function () {
           return;
         }
 
+        // adds previous searches to history section
         $("#root").html('');
         displayWeatherData(weather);
         if(addHistory) {
@@ -161,9 +165,8 @@ $(function () {
     });
   }
 
+//   displays current weather data on page
   function displayWeatherData(weather) {
-    console.log("dt", weather.current.dt);
-    console.log("offset", weather.timezone_offset);
     $("#root").append(`<div id="current-wrapper">
       <h2 id="current-header">Current Weather for ${city}, ${state}, ${country}<br />${dayjs(dayjs.unix(parseInt(weather.current.dt)+parseInt(weather.timezone_offset))).format("dddd, MMMM D, YYYY h:mmA")}</h2>
       <div id="current-content">
@@ -180,6 +183,7 @@ $(function () {
 
     $("#root").append('<div id="daily-wrapper"></div>');
 
+    //   displays 5 day forecast weather data on page
     weather.daily.forEach((day,index) => {
       if(index < 5) {
         $("body #daily-wrapper").append(`<div class="daily-forecast">
