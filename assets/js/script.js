@@ -165,7 +165,7 @@ $(function () {
     console.log("dt", weather.current.dt);
     console.log("offset", weather.timezone_offset);
     $("#root").append(`<div id="current-wrapper">
-      <h2 id="current-header">Current Weather For ${city}, ${state}, ${country}<br />${dayjs(dayjs.unix(parseInt(weather.current.dt)+parseInt(weather.timezone_offset))).format("dddd, MMMM D, YYYY h:mmA")}</h2>
+      <h2 id="current-header">Current Weather for ${city}, ${state}, ${country}<br />${dayjs(dayjs.unix(parseInt(weather.current.dt)+parseInt(weather.timezone_offset))).format("dddd, MMMM D, YYYY h:mmA")}</h2>
       <div id="current-content">
       <div id="icon"><img class="weather-icon-current" src="./assets/img/weather-icons/${weather.current.weather[0].icon}.png" /></div>
       <div id="current-text">
