@@ -13,6 +13,6 @@
 - Displays 5 day forecast
 - Weather icons change depending on weather conditions
 
-Link to Deployment --->
+Link to Deployment ---> https://tonytrocino.github.io/weather-dashboard/
 
 ![Screenshot of Weather Dashboard](./assets/img/weather-dashboard_screenshot.png)
